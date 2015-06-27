@@ -10,7 +10,7 @@ It provides several APIs for uploading and fetching data, and the [Upload Widget
 
 ## GWT-Cloudinary
 
-The project GWT-Cloudinary is the GWT wrapper for the Cloudinary's Upload Widget. Using it you have the power of the Upload Widget using a type-safe, IDE friendly GWT Widget and event handling.
+The project GWT-Cloudinary is the GWT wrapper for the Cloudinary's Upload Widget. By using it you have the power of the Upload Widget using a type-safe, IDE friendly GWT Widget and event handling. It is built with GWT 2.7.0 and with Java 7 syntax.
 
 ## Example
 

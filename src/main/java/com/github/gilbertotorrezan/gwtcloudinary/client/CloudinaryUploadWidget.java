@@ -242,7 +242,7 @@ HasText, HasHTML, HasSafeHtml, HasEnabled {
 	/**
 	 * The default selected source tab when the widget is opened.
 	 * 
-	 * @param String. Default: local
+	 * @param defaultSource String. Default: local
 	 */
 	public CloudinaryUploadWidget setDefaultSource(String defaultSource) {
 		options.put("default_source", defaultSource == null ? null : new JSONString(defaultSource));

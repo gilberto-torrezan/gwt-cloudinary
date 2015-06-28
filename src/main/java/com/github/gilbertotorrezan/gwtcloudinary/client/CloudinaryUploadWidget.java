@@ -106,7 +106,7 @@ HasText, HasHTML, HasSafeHtml, HasEnabled {
 	}-*/;
 	
 	/**
-	 * Fires the {@link CloudinaryUploadFinishedEvent} by using the native objects.
+	 * Fires the {@link CloudinaryUploadFinishedEvent} by using the native objects, converting them to {@link CloudinaryUploadInfo} objects.
 	 */
 	protected void fireUploadFinished(JavaScriptObject error, JavaScriptObject result){
 		String message = null;
@@ -118,10 +118,10 @@ HasText, HasHTML, HasSafeHtml, HasEnabled {
 		}
 		
 		if (result != null) {
-			JSONArray array = new JSONArray(result);
-			int size = array.size();
+			JSONArray resultArray = new JSONArray(result);
+			int size = resultArray.size();
 			for (int i = 0; i< size; i++){
-				JSONObject object = array.get(i).isObject();
+				JSONObject object = resultArray.get(i).isObject();
 				
 				CloudinaryUploadInfo info = new CloudinaryUploadInfo();
 				info.setPublicId(getSafeString(object.get("public_id")));
@@ -140,6 +140,61 @@ HasText, HasHTML, HasSafeHtml, HasEnabled {
 				info.setEtag(getSafeString(object.get("etag")));
 				info.setPath(getSafeString(object.get("path")));
 				info.setCreatedAt(getSafeString(object.get("created_at")));
+				
+				JSONValue tagsValue = object.get("tags");
+				if (tagsValue != null && tagsValue.isArray() != null){
+					JSONArray array = tagsValue.isArray();
+					String[] tags = new String[array.size()]; 
+					for (int j = 0; j< tags.length; j++){
+						JSONValue v = array.get(j);
+						tags[j] = getSafeString(v);
+					}
+					info.setTags(tags);
+				}
+				
+				JSONValue coordinatesValue = object.get("coordinates");
+				if (coordinatesValue != null && coordinatesValue.isObject() != null){
+					JSONObject obj = coordinatesValue.isObject();
+					
+					JSONValue customValue = obj.get("custom");
+					if (customValue != null && customValue.isArray() != null){
+						JSONArray array = customValue.isArray();
+						CloudinaryCoordinates[] coordinatesArray = new CloudinaryCoordinates[array.size()];
+						for (int j = 0; j< coordinatesArray.length; j++){
+							JSONValue value = array.get(j);
+							if (value != null && value.isArray() != null && value.isArray().size() >= 4){
+								JSONArray valueArray = value.isArray();
+								coordinatesArray[j] = new CloudinaryCoordinates();
+								coordinatesArray[j].setX(getSafeInteger(valueArray.get(0)));
+								coordinatesArray[j].setY(getSafeInteger(valueArray.get(1)));
+								coordinatesArray[j].setWidth(getSafeInteger(valueArray.get(2)));
+								coordinatesArray[j].setHeight(getSafeInteger(valueArray.get(3)));								
+							}
+						}
+						info.setCustomCoordinates(coordinatesArray);
+					}
+					
+					JSONValue facesValue = obj.get("faces");
+					if (facesValue == null || facesValue.isArray() == null){
+						facesValue = obj.get("face");
+					}
+					if (facesValue != null && facesValue.isArray() != null){
+						JSONArray array = facesValue.isArray();
+						CloudinaryCoordinates[] coordinatesArray = new CloudinaryCoordinates[array.size()];
+						for (int j = 0; j< coordinatesArray.length; j++){
+							JSONValue value = array.get(j);
+							if (value != null && value.isArray() != null && value.isArray().size() >= 4){
+								JSONArray valueArray = value.isArray();
+								coordinatesArray[j] = new CloudinaryCoordinates();
+								coordinatesArray[j].setX(getSafeInteger(valueArray.get(0)));
+								coordinatesArray[j].setY(getSafeInteger(valueArray.get(1)));
+								coordinatesArray[j].setWidth(getSafeInteger(valueArray.get(2)));
+								coordinatesArray[j].setHeight(getSafeInteger(valueArray.get(3)));								
+							}
+						}
+						info.setFaceCoordinates(coordinatesArray);
+					}
+				}
 				
 				infos.add(info);
 			}

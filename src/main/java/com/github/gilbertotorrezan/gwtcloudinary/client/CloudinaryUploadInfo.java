@@ -55,6 +55,9 @@ public class CloudinaryUploadInfo implements Serializable {
 	private String originalFilename;
 	private String path;
 	private String createdAt;
+	private String[] tags;
+	private CloudinaryCoordinates[] customCoordinates;
+	private CloudinaryCoordinates[] faceCoordinates;
 	
 	public String getThumbnailUrl() {
 		return thumbnailUrl;
@@ -183,5 +186,28 @@ public class CloudinaryUploadInfo implements Serializable {
 	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+	public void setTags(String[] tags) {
+		this.tags = tags;
+	}
+	
+	public String[] getTags() {
+		return tags;
+	}
 
+	public CloudinaryCoordinates[] getCustomCoordinates() {
+		return customCoordinates;
+	}
+
+	public void setCustomCoordinates(CloudinaryCoordinates[] customCoordinates) {
+		this.customCoordinates = customCoordinates;
+	}
+
+	public CloudinaryCoordinates[] getFaceCoordinates() {
+		return faceCoordinates;
+	}
+
+	public void setFaceCoordinates(CloudinaryCoordinates[] faceCoordinates) {
+		this.faceCoordinates = faceCoordinates;
+	}
 }

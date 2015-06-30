@@ -80,7 +80,7 @@ Using Apache Maven:
 <dependency>
 	<groupId>com.github.gilberto-torrezan</groupId>
 	<artifactId>gwt-cloudinary</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<scope>provided</scope>
 </dependency>
 ```
